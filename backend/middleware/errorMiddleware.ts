@@ -1,10 +1,14 @@
-import express, { Request, Response } from "express";
-const errorHandler = (err: Error, req: Request, res: Response) => {
-  const statusCode = res.statusCode ? res.statusCode : 500;
+import { Request, Response, NextFunction } from "express";
 
-  res.status(statusCode);
+const errorHandler = (
+  err: Error,
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const statusCode = res.statusCode !== 200 ? res.statusCode : 500;
 
-  res.json({
+  res.status(statusCode).json({
     message: err.message,
     stack: process.env.NODE_ENV === "production" ? null : err.stack,
   });
