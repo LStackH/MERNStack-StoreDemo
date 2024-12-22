@@ -2,7 +2,8 @@ import express, { Express, Request, Response, RequestHandler } from "express";
 import colors from "colors";
 import "dotenv/config";
 import errorHandler from "../middleware/errorMiddleware";
-import router from "../routes/productRoutes";
+import productRouter from "../routes/productRoutes";
+import userRouter from "../routes/userRoutes";
 import connectDB from "../config/db";
 
 const app: Express = express();
@@ -12,7 +13,8 @@ const port = process.env.PORT || 5000;
 
 connectDB();
 
-app.use("/api/products", router);
+app.use("/api/products", productRouter);
+app.use("/api/users", userRouter);
 
 app.get("/", (req: Request, res: Response) => {
   res.json({ message: "Hello World" });
