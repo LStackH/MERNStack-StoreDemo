@@ -1,5 +1,6 @@
 import express, { Express, Request, Response, RequestHandler } from "express";
 import colors from "colors";
+import cors from "cors";
 import "dotenv/config";
 import errorHandler from "../middleware/errorMiddleware";
 import productRouter from "../routes/productRoutes";
@@ -9,6 +10,7 @@ import connectDB from "../config/db";
 const app: Express = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cors());
 const port = process.env.PORT || 5000;
 
 connectDB();

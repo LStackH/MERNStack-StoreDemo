@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import {
   getProducts,
+  getProduct,
   createProduct,
   updateProduct,
   deleteProduct,
@@ -9,8 +10,9 @@ import protect from "../middleware/authMiddleware";
 
 const router = express.Router();
 
-router.get("/", protect, getProducts);
-router.post("/", protect, createProduct);
+router.get("/", getProducts);
+router.get("/:id", getProduct);
+router.post("/", createProduct);
 router.put("/:id", protect, updateProduct);
 router.delete("/:id", protect, deleteProduct);
 

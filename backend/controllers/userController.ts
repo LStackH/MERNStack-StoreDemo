@@ -6,7 +6,7 @@ import bcrypt from "bcryptjs";
 import User from "../models/userModel";
 
 // @desc    Register new user
-// @route   POST /api/users
+// @route   POST /api/users/register
 // @access  public
 const registerUser = asyncHandler(async (req: Request, res: Response) => {
   const { name, email, password } = req.body;

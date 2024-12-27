@@ -11,6 +11,15 @@ const getProducts = asyncHandler(async (req: Request, res: Response) => {
   res.status(200).json(products);
 });
 
+// desc@    Get Product
+// @route   GET /api/products/:id
+// @access  private
+const getProduct = asyncHandler(async (req: Request, res: Response) => {
+  const product = await Product.findById(req.params.id);
+
+  res.status(200).json(product);
+});
+
 // desc@    Create Product
 // @route   POST /api/products
 // @access  private
@@ -70,4 +79,4 @@ const deleteProduct = asyncHandler(async (req: Request, res: Response) => {
     .json({ message: `Product ${req.params.id} deleted successfully` });
 });
 
-export { getProducts, createProduct, updateProduct, deleteProduct };
+export { getProducts, getProduct, createProduct, updateProduct, deleteProduct };
