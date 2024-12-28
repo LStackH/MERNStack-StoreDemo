@@ -5,7 +5,6 @@ import User, { IUser } from "../models/userModel";
 
 const protect = asyncHandler(
   async (req: Request & { user?: any }, res: Response, next: NextFunction) => {
-    next();
     let token;
 
     if (

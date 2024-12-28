@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../AuthContext";
+import { useAuth } from "../context/AuthContext";
+import { loginUser } from "../utility/api";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -12,25 +13,13 @@ const Login: React.FC = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:3000/api/users/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (!response.ok) {
-        const message = await response.text();
-        throw new Error(message || "Login failed.");
-      }
-
-      const data = await response.json();
+      const data = await loginUser({ email, password });
       console.log("Login successful:", data);
 
       // Save token and redirect
-      login(data.token, data.username); // Assuming response contains a username
-      navigate("/");
+      login(data.token, data.name);
+      //TODO: Check if last page was register, then return to homepage
+      navigate(-1);
     } catch (err: any) {
       setError(err.message);
     }
@@ -39,7 +28,7 @@ const Login: React.FC = () => {
   return (
     <form
       onSubmit={handleLogin}
-      className="bg-gray-800 p-6 rounded-lg shadow-lg"
+      className="bg-gray-800 p-6 rounded-lg shadow-lg max-w-md mx-auto"
     >
       <div className="mb-4">
         <label htmlFor="email" className="block text-gray-400 mb-2">

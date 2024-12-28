@@ -1,30 +1,20 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { registerUser } from "../utility/api";
 
 const Register: React.FC = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:3000/api/users/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name, email, password }),
-      });
-
-      if (!response.ok) {
-        const message = await response.text();
-        throw new Error(message || "Registration failed.");
-      }
-
-      const data = await response.json();
-      console.log("Registration successful:", data);
-      // Handle successful registration (e.g., redirect to login)
+      await registerUser({ name, email, password }); // Use centralized API function
+      console.log("Registration successful");
+      navigate("/login");
     } catch (err: any) {
       setError(err.message);
     }
@@ -33,7 +23,7 @@ const Register: React.FC = () => {
   return (
     <form
       onSubmit={handleRegister}
-      className="bg-gray-800 p-6 rounded-lg shadow-lg"
+      className="bg-gray-800 p-6 rounded-lg shadow-lg max-w-md mx-auto"
     >
       <div className="mb-4">
         <label htmlFor="name" className="block text-gray-400 mb-2">

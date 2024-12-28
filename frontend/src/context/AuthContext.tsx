@@ -4,8 +4,10 @@ interface AuthContextProps {
   isLoggedIn: boolean;
   token: string | null;
   username: string | null;
+  cart: string[]; // Array of product ids
   login: (token: string, username: string) => void;
   logout: () => void;
+  addToCart: (productId: string) => void;
 }
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
@@ -16,6 +18,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [token, setToken] = useState<string | null>(null);
   const [username, setUsername] = useState<string | null>(null);
+  const [cart, setCart] = useState<string[]>([]);
 
   const login = (token: string, username: string) => {
     setIsLoggedIn(true);
@@ -29,13 +32,23 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     setIsLoggedIn(false);
     setToken(null);
     setUsername(null);
+    setCart([]);
     localStorage.removeItem("authToken");
     localStorage.removeItem("username");
   };
 
+  const addToCart = (productId: string) => {
+    if (productId === "") {
+      setCart([]); // Clear the cart
+    } else {
+      setCart((prevCart) => [...prevCart, productId]); // Add product to cart
+    }
+    console.log(`Cart updated: ${cart}`);
+  };
+
   return (
     <AuthContext.Provider
-      value={{ isLoggedIn, token, username, login, logout }}
+      value={{ isLoggedIn, token, username, cart, login, logout, addToCart }}
     >
       {children}
     </AuthContext.Provider>

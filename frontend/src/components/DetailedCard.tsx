@@ -1,18 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { useAuth } from "../context/AuthContext";
+import AddToCartButton from "./AddToCartButton";
+import { fetchProductById } from "../utility/api";
+import { Product } from "../types/Product";
 
 interface DetailedCardProps {
   productId: string;
-}
-
-interface Product {
-  _id: string;
-  name: string;
-  description: string;
-  price: number;
-  stock: number;
-  category: string;
-  createdAt: string;
-  updatedAt: string;
 }
 
 const DetailedCard: React.FC<DetailedCardProps> = ({ productId }) => {
@@ -20,28 +13,32 @@ const DetailedCard: React.FC<DetailedCardProps> = ({ productId }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
+  const { addToCart } = useAuth();
+
   useEffect(() => {
-    fetch(`http://localhost:3000/api/products/${productId}`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data: Product) => {
+    const getProduct = async () => {
+      try {
+        setLoading(true);
+        const data = await fetchProductById(productId); // Use centralized API function
         setProduct(data);
         setLoading(false);
-      })
-      .catch((err) => {
-        setError(err.message);
+      } catch (err) {
+        setError((err as Error).message);
         setLoading(false);
-      });
+      }
+    };
+
+    getProduct();
   }, [productId]);
 
   if (loading) return <p className="text-gray-400 text-center">Loading...</p>;
   if (error) return <p className="text-red-400 text-center">Error: {error}</p>;
   if (!product)
     return <p className="text-gray-400 text-center">Product not found.</p>;
+
+  // Convert strings to Date objects
+  const createdAt = new Date(product.createdAt);
+  const updatedAt = new Date(product.updatedAt);
 
   return (
     <div className="bg-gray-800 p-8 rounded-lg shadow-lg">
@@ -51,11 +48,22 @@ const DetailedCard: React.FC<DetailedCardProps> = ({ productId }) => {
         <strong>Category:</strong> {product.category}
       </p>
       <p className="text-gray-300">
-        <strong>Price:</strong> ${product.price.toFixed(2)}
+        <strong>Price:</strong> €{product.price.toFixed(2)}
       </p>
       <p className="text-gray-300">
         <strong>Stock:</strong> {product.stock} units available
       </p>
+      <div className="mt-4 opacity-80">
+        <p className="text-gray-300">
+          <strong>Created: </strong> {createdAt.toLocaleDateString()}
+        </p>
+        <p className="text-gray-300">
+          <strong>Last Updated: </strong> {updatedAt.toLocaleDateString()}
+        </p>
+      </div>
+      <div className="mt-4">
+        <AddToCartButton productId={product._id} onAddToCart={addToCart} />
+      </div>
     </div>
   );
 };
