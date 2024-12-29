@@ -1,5 +1,5 @@
 import React from "react";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 import { CgShoppingCart } from "react-icons/cg";
 
 interface AddToCartButtonProps {
@@ -26,7 +26,7 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
       onClick={handleAddToCart}
       className={`flex items-center gap-2 px-2 py-2 rounded ${
         isLoggedIn
-          ? "bg-emerald-700 text-white hover:bg-blue-600 transition"
+          ? "bg-emerald-700 text-white hover:bg-emerald-800 transition"
           : "bg-gray-500 text-gray-300 cursor-not-allowed"
       }`}
       disabled={!isLoggedIn}

@@ -12,15 +12,15 @@ const registerUser = asyncHandler(async (req: Request, res: Response) => {
   const { name, email, password } = req.body;
 
   if (!name || !email || !password) {
-    res.status(400);
-    throw new Error("Please add all fields");
+    res.status(400).json({ message: "Please add all fields" });
+    return;
   }
 
   // Check if user exits
   const userExists = await User.findOne({ email });
   if (userExists) {
-    res.status(400);
-    throw new Error("User already exists");
+    res.status(400).json({ message: "Email already exists" });
+    return;
   }
 
   // Hash password
@@ -67,8 +67,7 @@ const loginUser = asyncHandler(async (req: Request, res: Response) => {
       token: generateToken(user._id as string),
     });
   } else {
-    res.status(400);
-    throw new Error("Invalid credentials");
+    res.status(400).json({ message: "Invalid credentials" });
   }
 });
 

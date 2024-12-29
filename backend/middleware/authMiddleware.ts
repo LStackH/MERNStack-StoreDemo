@@ -3,6 +3,7 @@ import { Request, Response, NextFunction } from "express";
 import asyncHandler from "express-async-handler";
 import User, { IUser } from "../models/userModel";
 
+// Protect middleware: Verifies token and adds user to request object
 const protect = asyncHandler(
   async (req: Request & { user?: any }, res: Response, next: NextFunction) => {
     let token;
@@ -37,4 +38,16 @@ const protect = asyncHandler(
   }
 );
 
-export default protect;
+// Admin middleware: Checks if the logged-in user is an admin
+const admin = asyncHandler(
+  async (req: Request & { user?: any }, res: Response, next: NextFunction) => {
+    if (req.user && req.user.isAdmin) {
+      next();
+    } else {
+      res.status(403);
+      throw new Error("Access denied, not an admin");
+    }
+  }
+);
+
+export { protect, admin };

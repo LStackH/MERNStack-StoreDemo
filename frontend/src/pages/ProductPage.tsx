@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import DetailedCard from "../components/DetailedCard";
-import ReturnButton from "../components/ReturnButton";
+import ReturnButton from "../components/Buttons/ReturnButton";
 
 const ProductPage: React.FC = () => {
   const { id } = useParams<{ id: string }>(); // Get the product ID from the URL

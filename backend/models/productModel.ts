@@ -6,6 +6,7 @@ export interface IProduct extends Document {
   price: number;
   stock: number;
   category: string;
+  images: string[];
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -34,6 +35,7 @@ const productSchema: Schema = new Schema<IProduct>(
       type: String,
       required: [true, "Please add a category"],
     },
+    images: { type: [String], default: [] },
   },
   {
     timestamps: true, // Automatically adds createdAt and updatedAt fields

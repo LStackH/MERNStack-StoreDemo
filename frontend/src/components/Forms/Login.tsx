@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-import { loginUser } from "../utility/api";
+import { useAuth } from "../../context/AuthContext";
+import { loginUser } from "../../utility/api";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -16,8 +16,8 @@ const Login: React.FC = () => {
       const data = await loginUser({ email, password });
       console.log("Login successful:", data);
 
-      // Save token and redirect
-      login(data.token, data.name);
+      // Save token, name, admin status and redirect
+      login(data.token, data.name, data.isAdmin);
       //TODO: Check if last page was register, then return to homepage
       navigate(-1);
     } catch (err: any) {

@@ -122,6 +122,7 @@ const ProductListings: React.FC = () => {
             price={product.price}
             createdAt={product.createdAt}
             updatedAt={product.updatedAt}
+            previewImage={product.images[0]} // Use the first image as the preview
             onViewDetails={(id) => navigate(`/product/${id}`)}
           />
         ))}

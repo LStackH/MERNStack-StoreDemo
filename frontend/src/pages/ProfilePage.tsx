@@ -1,33 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
-
-interface User {
-  id: string;
-  name: string;
-  email: string;
-}
+import { fetchUser } from "../utility/api";
+import { User } from "../types/User";
 
 const ProfilePage: React.FC = () => {
-  const { token } = useAuth();
+  const { token, isAdmin } = useAuth();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchUser = async () => {
+    const getUser = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/users/me", {
-          headers: {
-            Authorization: `Bearer ${token}`, // Include token in the Authorization header
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error(`Error: ${response.statusText}`);
+        if (!token) {
+          throw new Error("You must be logged in to view this page.");
         }
 
-        const data: User = await response.json();
-        setUser(data);
+        const userData = await fetchUser(token);
+        setUser(userData);
       } catch (err: any) {
         setError(err.message);
       } finally {
@@ -35,12 +25,7 @@ const ProfilePage: React.FC = () => {
       }
     };
 
-    if (token) {
-      fetchUser();
-    } else {
-      setLoading(false);
-      setError("You must be logged in to view this page.");
-    }
+    getUser();
   }, [token]);
 
   if (loading) {
@@ -72,6 +57,11 @@ const ProfilePage: React.FC = () => {
         <p className="text-gray-300">
           <strong>ID:</strong> {user?.id}
         </p>
+        {isAdmin && (
+          <p className="text-gray-300">
+            <strong>Admin Status: True</strong>
+          </p>
+        )}
       </div>
     </div>
   );

@@ -40,7 +40,7 @@ const ShoppingCart: React.FC = () => {
   };
 
   const handlePurchase = () => {
-    alert("Purchase functionality coming soon!");
+    alert(`Purchase functionality coming soon! Current cart item ID's ${cart}`);
   };
 
   return (
@@ -56,7 +56,7 @@ const ShoppingCart: React.FC = () => {
 
       {/* Dropdown Cart */}
       {isCartOpen && (
-        <div className="absolute right-0 mt-2 w-72 bg-gray-800 text-white rounded-md shadow-lg z-20">
+        <div className="absolute border right-0 mt-2 w-72 bg-gray-800 text-white rounded-md shadow-lg z-20">
           <div className="p-4">
             <h3 className="text-lg font-semibold">Shopping Cart</h3>
             {cartDetails.length === 0 ? (

@@ -4,8 +4,9 @@ interface AuthContextProps {
   isLoggedIn: boolean;
   token: string | null;
   username: string | null;
+  isAdmin: boolean;
   cart: string[]; // Array of product ids
-  login: (token: string, username: string) => void;
+  login: (token: string, username: string, isAdmin: boolean) => void;
   logout: () => void;
   addToCart: (productId: string) => void;
 }
@@ -18,14 +19,17 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [token, setToken] = useState<string | null>(null);
   const [username, setUsername] = useState<string | null>(null);
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [cart, setCart] = useState<string[]>([]);
 
-  const login = (token: string, username: string) => {
+  const login = (token: string, username: string, isAdmin: boolean) => {
     setIsLoggedIn(true);
     setToken(token);
     setUsername(username);
+    setIsAdmin(isAdmin);
     localStorage.setItem("authToken", token); // Save token in localStorage
     localStorage.setItem("username", username); // Save username in localStorage
+    localStorage.setItem("isAdmin", JSON.stringify(isAdmin)); // Save Admin satus in localStorage
   };
 
   const logout = () => {
@@ -33,8 +37,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     setToken(null);
     setUsername(null);
     setCart([]);
+    setIsAdmin(false);
     localStorage.removeItem("authToken");
     localStorage.removeItem("username");
+    localStorage.removeItem("isAdmin");
   };
 
   const addToCart = (productId: string) => {
@@ -48,7 +54,16 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
   return (
     <AuthContext.Provider
-      value={{ isLoggedIn, token, username, cart, login, logout, addToCart }}
+      value={{
+        isLoggedIn,
+        token,
+        username,
+        isAdmin,
+        cart,
+        login,
+        logout,
+        addToCart,
+      }}
     >
       {children}
     </AuthContext.Provider>
