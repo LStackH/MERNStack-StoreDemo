@@ -12,7 +12,7 @@ To start the backend server, you can navigate into the backend folder and run
 ```
 npm start
 ```
-To start the frontend, navigate into the frontend folder and run 
+To start the frontend, open another terminal, so that you don't close the backend process, and navigate into the frontend folder and run 
 ```
 npm run dev
 ```
