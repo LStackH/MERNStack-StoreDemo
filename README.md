@@ -1,7 +1,8 @@
 # Author Lukas Honka
+This repo includes both the backend and the frontend, Learning Diary and this README
 
 # MERN-Stack, Modern Online-Store Demo
-This repo includes both the backend and the frontend, Learning Diary and this README
+Utilizing MongoDB, Express, React and Node, to make a nearly fully-functional Full stack web store. The website allows the users to search from all the available product in the database, while providing filtering and sorting options. The website also allows for registering and login, with persistent user data stored in the database. Once logged in, the user can add products to their shopping cart, which keeps track of the added items. Accounts with admin role setup in the database can also access more functionalities, like creating, editing or removing products.
 
 # Video demo of the stack running locally: 
 https://lut-my.sharepoint.com/:v:/g/personal/lukas_honka_student_lut_fi/ESFrPz3bKiFKot7nR66MY9YB-IjN9RCSD3VpH14_FgphyA?e=AsT2rt&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D
