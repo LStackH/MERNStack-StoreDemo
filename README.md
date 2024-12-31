@@ -4,7 +4,8 @@
 
 # This repo includes both the backend and the frontend, Learning Diary and this README
 
-# Video demo of the stack running locally: https://lut-my.sharepoint.com/:v:/g/personal/lukas_honka_student_lut_fi/ESFrPz3bKiFKot7nR66MY9YB-IjN9RCSD3VpH14_FgphyA?e=AsT2rt&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D
+# Video demo of the stack running locally: 
+https://lut-my.sharepoint.com/:v:/g/personal/lukas_honka_student_lut_fi/ESFrPz3bKiFKot7nR66MY9YB-IjN9RCSD3VpH14_FgphyA?e=AsT2rt&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D
 
 # How to run locally:
 To run this project in full, you will need to have MongoDB installed locally. For ease of use, MongoDBCompass is recommended to interact with your databases.
